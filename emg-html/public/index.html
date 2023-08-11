@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang = "en">
+
+<head>
+    <meta charser ="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Line Chart | EMG DATA</title>
+
+	<!-- For offline ESP graphs see this tutorial https://circuits4you.com/2018/03/10/esp8266-jquery-and-ajax-web-server/ -->
+	<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+    https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
+
+    <script>
+        // REPLACE WITH YOUR web app's Firebase configuration
+        var firebaseConfig = {
+          apiKey: "AIzaSyCvHWmmyIRF5uvzHSOp92UnE-0-yPCmgBo",
+          authDomain: "emgrealtime.firebaseapp.com",
+          databaseURL: "https://emgrealtime-default-rtdb.asia-southeast1.firebasedatabase.app",
+          projectId: "emgrealtime",
+          storageBucket: "emgrealtime.appspot.com",
+          messagingSenderId: "806224184787",
+          appId: "1:806224184787:web:65b970d3c29521e314db26"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        var database = firebase.database();
+    </script>
+  <script src="app.js" defer></script>
+    
+	<style>
+
+	/* canvas{
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+	} */
+
+	/* Data Table Styling */
+	#dataTable {
+	  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	  border-collapse: collapse;
+	  width: 100%;
+	}
+
+	#dataTable td, #dataTable th {
+	  border: 1px solid #ddd;
+	  padding: 8px;
+	}
+
+	#dataTable tr:nth-child(even){background-color: #f2f2f2;}
+
+	#dataTable tr:hover {background-color: #ddd;}
+
+	#dataTable th {
+	  padding-top: 12px;
+	  padding-bottom: 12px;
+	  text-align: left;
+	  background-color: #4CAF50;
+	  color: white;
+	}
+	</style>
+
+</head>
+
+<body>
+    <div style="text-align:center;"><b>X-Manibus</b><br>Real Time EMG Data Logging with Graphs on ESP32</div>
+    <div class="chart-container" position: relative; height:350px; width:100%">
+        <canvas id="Chart" width="400" height="400"></canvas>
+    </div>
+<div>
+	<table id="dataTable">
+    <tr><th>Time</th><th>EMG Data</th><th>% Servo</th></tr>
+    <!-- Rows will be dynamically added here -->
+</table>
+</div>
+<br>
+<br>	
+
+<script>
+//Graphs visit: https://www.chartjs.org
+var values1 = [];
+var values2 = [];
+var timeStamp = [];
+
+function showGraph() {
+    var ctx = document.getElementById("Chart").getContext('2d');
+    var Chart2 = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: timeStamp, // Bottom Labeling
+            datasets: [
+                {
+                    label: "EMG",
+                    fill: false,
+                    backgroundColor: 'rgba( 233, 156, 18 , 1)',
+                    borderColor: 'rgba( 233, 156, 18 , 1)',
+                    data: values1,
+                },
+                {
+                    label: "Servo",
+                    fill: false,
+                    backgroundColor: 'rgba(44, 130, 201, 1)',
+                    borderColor: 'rgba(44, 130, 201, 1)',
+                    data: values2,
+                }
+            ],
+        },
+        options: {
+            title: {
+                display: true,
+                text: "EMG - Servo Graph"
+            },
+            maintainAspectRatio: false,
+            elements: {
+                line: {
+                    tension: 0.2
+                }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: { 
+                        beginAtZero: false,
+                    }
+                }]
+            }
+        }
+    });
+}
+
+// Function to update the graph with new data
+function updateGraph(currentTime, emgreading, servoReading) {
+    values1.push(emgreading);
+    values2.push(servoReading);
+    timeStamp.push(currentTime);
+
+    showGraph();
+}
+
+
+//On Page load show graphs
+// window.onload = function() {
+// 	console.log('ayo dong?');
+// 	showGraph(5,10,4,58);
+// }
+
+</script>
+
+</body>
+
+</html>
