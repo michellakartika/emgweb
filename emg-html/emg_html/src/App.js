@@ -1,7 +1,6 @@
 import tl from './tl.png'
 import './App.css';
-// import React from 'react';
-// import Plot from '../node_modules/react-plotly.js';
+import Dnld_btn from './components/dnld_btn';
 
 
 function App() {
@@ -14,6 +13,7 @@ function App() {
           <p>aa</p>
         <canvas id="Chart" width="400" height="400"></canvas>
         </div>
+        <Dnld_btn/>
       </header>
       
       
