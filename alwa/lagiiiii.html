@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js"></script>
+    <style>
+        canvas{
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <canvas id="myChart"></canvas>
+        </div>
+        <script>
+            $.getJSON("https://emgrealtime-default-rtdb.asia-southeast1.firebasedatabase.app/emg.json", function (json) {
+            //$.getJSON("https://skripsi-adeguntoro.firebaseio.com/sensor.json", function (json) {
+                console.log(json);
+                // var labels = json.map(function(item) {
+                //     return item.emg;
+                // });
+                var data = {
+                    labels: [1,2,3,4,5],
+                    datasets: [
+                        {
+                            label: "My First dataset",
+                            fillColor: "rgba(220,220,220,0.5)",
+                            strokeColor: "rgba(220,220,220,0.8)",
+                            highlightFill: "rgba(220,220,220,0.75)",
+                            highlightStroke: "rgba(220,220,220,1)",
+                            data: [1,2,3,4,5]
+                        }]
+                };
+                var ctx = document.getElementById("myChart").getContext("2d");
+                ctx.canvas.width = 1000;
+                ctx.canvas.height = 800;
+                var myChart = new Chart(ctx).Bar(data);
+            });
+        </script>
+    </body>
+</html>

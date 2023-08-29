@@ -1,0 +1,96 @@
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div>
+  <p>aaaaaaaaaa</p>
+    <canvas id="myChart"></canvas>
+  </div>
+
+  <!-- <script src="coba_grafik.js"></script> -->
+    
+  <script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+    var labelll;
+  
+    var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: labell(),
+        datasets: [{
+            label: '# of Votes',
+            data: datass(),
+            backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+// console.log(getData())
+
+function datass(){
+  data = [12, 19, 3, 23, 2, 3, 4];
+  return data;
+};
+
+function labell(){
+  let data = [];
+  for (let i = 1; i <= datass().length; i++){
+    data += i;
+  }  
+  return data;
+};
+
+    getData();
+    function getData(){
+        fetch('https://emgrealtime-default-rtdb.asia-southeast1.firebasedatabase.app/emg.json')
+        .then((res) => res.json())
+        .then((data) => {
+            let tabel = '';
+            let output = Object.entries(data);
+            // console.log(output);
+            output.forEach((row) => {
+              var emg = row[1].emg
+              var servo = row[1].servo
+
+              // return  emg, servo ;
+              
+                console.log(emg,servo)
+            //     hasil.innerHTML +=`
+            //     <p>${row[1]}</p>
+            //     `
+            })
+            // addData(myChart, emg, servo);
+        });
+    }
+
+  </script>
+
+
+
+
+
+
+
+

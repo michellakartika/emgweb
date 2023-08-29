@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<script src="firebase.js"></script>
+<script src="jquery-3.2.1.slim.min.js"></script>
+<script src="bootstrap.min.js"></script>
+<link rel="stylesheet" href="bootstrap.min.css" >
+ 
+</head>
+<body>
+<div style="padding:100px;">
+<table id="tabel-status-alat" class="table table-striped table-bordered table-hover">
+<thead class="thead-dark">
+<tr>
+<th scope="col">Nama Alat</th>
+<th scope="col">Status Alat</th>
+<th scope="col">Tanggal Alat</th>
+<th scope="col">Jam Alat</th>
+</tr>
+</thead>
+<tbody>
+ 
+</tbody>
+</table>
+</div>
+ 
+<script>
+ 
+// Initialize Firebase
+var config = {
+apiKey: "YOURAPIKEY",
+authDomain: "YOURDOMAIN",
+databaseURL: "YOURURL",
+projectId: "YOURPROJECTID",
+storageBucket: "YOURSTORAGEBUCKET",
+messagingSenderId: "YOURSENDERID"
+};
+firebase.initializeApp(config);
+ 
+// Buat referensi database firebase
+var dbRef = firebase.database();
+var statusAlat = dbRef.ref("status-alat");
+ 
+// Dapatkan referensi table
+var table = document.getElementById("tabel-status-alat").getElementsByTagName('tbody')[0];;
+ 
+// Memuat Data
+statusAlat.on("child_added", function(data, prevChildKey) {
+var newstatusAlat = data.val();
+ 
+var row = table.insertRow(table.rows.length);
+ 
+var cell1 = row.insertCell(0);
+var cell2 = row.insertCell(1);
+var cell3 = row.insertCell(2);
+var cell4 = row.insertCell(3);
+ 
+cell1.innerHTML = newstatusAlat.nama_alat;
+cell2.innerHTML = newstatusAlat.status_alat;
+cell3.innerHTML = newstatusAlat.tanggal_alat;
+cell4.innerHTML = newstatusAlat.jam_alat;
+ 
+});
+ 
+</script>
+ 
+</body>
+</html>

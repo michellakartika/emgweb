@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+        <div>
+            <p>aaaaaaaaaa</p>
+            <canvas id="myChart"></canvas>
+        </div>
+
+        <!-- FIREBASE WAJIB -->
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    
+        <!-- FIREBASE PILIHAN -->
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+
+
+
+        <script>
+
+
+
+
+            var config = {
+            apiKey: "AIzaSyB4Ee_IPBbVhkavoXXrJ_bg7YKK5rfVc2Y",
+            authDomain: "tes-plot.firebaseapp.com",
+            databaseURL: "https://tes-plot-default-rtdb.firebaseio.com",
+            projectId: "tes-plot",
+            storageBucket: "tes-plot.appspot.com",
+            messagingSenderId: "562009303458",
+            appId: "1:562009303458:web:6ad900e6c71bec229e2afb",
+            measurementId: "G-ZV7GZPRH8R"};
+            
+            
+            firebase.initializeApp(config);
+
+            // function getData(callbackIN) {
+            // var ref = firebase.database().ref("data");
+            //     ref.once('value').then(function (snapshot) {
+            //     callbackIN(snapshot.val())
+            // });
+            // }
+            
+            // console.log(getData())
+            // console.log(genFunction())
+            //  ------------------------------------------------------------------
+            // // Buat referensi database firebase
+            var dbRef = firebase.database();
+            var dataaa = dbRef.ref("tes_plot");
+
+            // var datas;
+            // --------------------------------------------------------------------------------------
+            dataaa.on("value", (snapshot) => {
+                console.log(snapshot.val())
+                snapshot.val()
+                const ctx = document.getElementById('myChart').getContext('2d');
+            
+            var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: snapshot.val(),
+                datasets: [{
+                    label: '# of Votes',
+                    data: snapshot.val(),
+                    backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+            });
+
+            
+            // dataa = dataaa.on('value' , dataBerhasil , dataGagal);
+
+
+            // function dataBerhasil(data) {
+            // data
+            // }
+            // function dataGagal(err) {
+            // console.log(err);
+            // }
+        //    ---------------------------------------------------------------------------
+            </script>
+</body>
+</html>
+

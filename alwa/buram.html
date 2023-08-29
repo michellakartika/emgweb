@@ -1,11 +1,16 @@
+<!-- https://emgrealtime-default-rtdb.asia-southeast1.firebasedatabase.app/ -->
+
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <div>
     <canvas id="myChart"></canvas>
   </div>
+
+  <!-- <script src="coba_grafik.js"></script> -->
     
   <script>
-    const ctx = document.getElementById('myChart');
+    const ctx = document.getElementById('myChart').getContext('2d');
   
     new Chart(ctx, {
       type: 'line',
@@ -26,6 +31,8 @@
       }
     });
   </script>
+
+
 
 
 
